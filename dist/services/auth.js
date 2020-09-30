@@ -45,17 +45,6 @@ var authHeaderKeys = [
     'expiry',
     'uid',
 ];
-// export const setAuthHeaders = (headers: AuthHeaders): void => {
-//   authHeaderKeys.forEach((key: string) => {
-//     axios.defaults.headers.common[key] = headers[key]
-//   })
-// }
-//
-// export const persistAuthHeadersInDeviceStorage = (Storage: DeviceStorage, headers: AuthHeaders): void => {
-//   authHeaderKeys.forEach((key: string) => {
-//     Storage.setItem(key, headers[key])
-//   })
-// }
 exports.setAuthHeaders = function (Storage, headers) {
     authHeaderKeys.forEach(function (key) {
         Storage.getItem(key).then(function (fromStorage) {
