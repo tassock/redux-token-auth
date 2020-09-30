@@ -39,23 +39,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = require("axios");
 var utility_1 = require("./utility");
 var authHeaderKeys = [
-    'access-token',
-    'token-type',
-    'client',
-    'expiry',
-    'uid',
+    "access-token",
+    "token-type",
+    "client",
+    "expiry",
+    "uid",
 ];
-// export const setAuthHeaders = (headers: AuthHeaders): void => {
-//   authHeaderKeys.forEach((key: string) => {
-//     axios.defaults.headers.common[key] = headers[key]
-//   })
-// }
-//
-// export const persistAuthHeadersInDeviceStorage = (Storage: DeviceStorage, headers: AuthHeaders): void => {
-//   authHeaderKeys.forEach((key: string) => {
-//     Storage.setItem(key, headers[key])
-//   })
-// }
 exports.setAuthHeaders = function (Storage, headers) {
     authHeaderKeys.forEach(function (key) {
         Storage.getItem(key).then(function (fromStorage) {
@@ -63,6 +52,13 @@ exports.setAuthHeaders = function (Storage, headers) {
             axios_1.default.defaults.headers.common[key] = value;
         });
     });
+};
+exports.getAuthKeys = function (authHeaders) {
+    var headers = {};
+    authHeaderKeys.forEach(function (key) {
+        headers[key] = authHeaders[key];
+    });
+    return headers;
 };
 exports.persistAuthHeadersInDeviceStorage = function (Storage, headers) {
     authHeaderKeys.forEach(function (key) {
@@ -91,7 +87,8 @@ exports.getUserAttributesFromResponse = function (userAttributes, response) {
     var userAttributesToReturn = {};
     Object.keys(response.data.data).forEach(function (key) {
         if (userAttributesBackendKeys.indexOf(key) !== -1) {
-            userAttributesToReturn[invertedUserAttributes[key]] = response.data.data[key];
+            userAttributesToReturn[invertedUserAttributes[key]] =
+                response.data.data[key];
         }
     });
     return userAttributesToReturn;
